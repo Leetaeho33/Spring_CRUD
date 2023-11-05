@@ -50,7 +50,7 @@ public class MemoRepository {
     // 해당id 메모 조회
     public Memo findMemoById(Long id){
         // SQL SELECT문을 통해 id값을 찾는 쿼리 작성
-        String sql = "SELECT title, contents, username, date FROM MEMO WHERE id = ? ";
+        String sql = "SELECT id, title, contents, username, date FROM MEMO WHERE id = ? ";
 
         // 해당 id를 갖는 Memo 객체를 반환
         // queryForObject() 메서드는 한개의 컬럼을 조회할 때 사용
@@ -58,6 +58,7 @@ public class MemoRepository {
             @Override
             public Memo mapRow(ResultSet rs, int rowNum) throws SQLException {
                 Memo memo = new Memo();
+                memo.setId(rs.getLong("id"));
                 memo.setTitle(rs.getString("title"));
                 memo.setContents(rs.getString("contents"));
                 memo.setUserName(rs.getString("username"));
@@ -69,20 +70,35 @@ public class MemoRepository {
 
     //모든 메모 조회
     public List<Memo> getAllMmeo(){
-        String sql = "SELECT title, contents, username, date FROM MEMO";
-        jdbcTemplate
-        return null;
+        String sql = "SELECT id, title, contents, username, date FROM MEMO";
+
+        //jdbcTemplate의 query()메서드를 이용해서 List형태로 반환
+        //Mmeo 객체를 담은 리스트로 반환
+        return jdbcTemplate.query(sql, new RowMapper<Memo>() {
+            @Override
+            public Memo mapRow(ResultSet rs, int rowNum) throws SQLException {
+                Memo memo = new Memo();
+                memo.setId(rs.getLong("id"));
+                memo.setTitle(rs.getString("title"));
+                memo.setContents(rs.getString("contents"));
+                memo.setUserName(rs.getString("username"));
+                memo.setDate(rs.getDate("date"));
+                return memo;
+            }
+        });
     }
 
     // 해당 id 메모 수정
     public Memo updateMemo(Memo memo, long id){
-        Memo updatedMemo = memo;
-        return updatedMemo;
+        String sql = "UPDATE MEMO SET title=?, contents=?, username=? WHERE id="+id;
+        jdbcTemplate.update(sql, memo.getTitle(), memo.getContents(), memo.getUserName());
+        return findMemoById(id);
     }
 
     // 해당 메모 삭제
     public void deleteMemo(long id){
-
+        String sql = "DELETE FROM memo WHERE id = ?";
+        jdbcTemplate.update(sql,id);
     }
 
 }

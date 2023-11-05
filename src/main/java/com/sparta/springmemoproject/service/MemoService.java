@@ -59,7 +59,7 @@ public class MemoService{
         // ResponseDto를 담을 List 생성
         List<MemoResponseDto> responseDtoList = new ArrayList<>();
 
-        // 레파지토리에 메모 전체 조회 후 Memo List에 담음
+        // Repository에 메모 전체 조회 후 Memo List에 담음
         List<Memo> memoList = memoRepository.getAllMmeo();
         MemoResponseDto responseDto;
 

@@ -36,14 +36,12 @@ public class MemoRepository {
             preparedStatement.setString(2, memo.getContents());
             preparedStatement.setString(3, memo.getUserName());
             preparedStatement.setString(4, memo.getPwd());
-            // 왜 Datetime을 String으로 반환해야하는지 이해가 안됨.
             preparedStatement.setString(5, String.valueOf(Timestamp.valueOf(LocalDateTime.now())));
             return preparedStatement;
         }, keyHolder);
 
         long id = keyHolder.getKey().longValue();
         memo.setId(id);
-
         return memo;
     }
 

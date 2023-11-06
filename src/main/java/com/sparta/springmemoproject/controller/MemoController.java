@@ -4,21 +4,28 @@ import com.sparta.springmemoproject.dto.MemoRequestDto;
 import com.sparta.springmemoproject.dto.MemoResponseDto;
 import com.sparta.springmemoproject.entity.Memo;
 import com.sparta.springmemoproject.service.MemoService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+// html이 아닌 데이터 반환을 위해  RestController 어노테이션 사용
 @RestController
-@RequestMapping("/api")
+@RequestMapping(value = "/api", method = RequestMethod.PUT, produces =  "application/json; charset=utf-8")
 public class MemoController {
     MemoService memoService;
 
     // 게시글 작성 요청 및 반환
     @PostMapping("/memo")
-    public MemoResponseDto post(@RequestBody MemoRequestDto memoRequestDto){
-        // 작성된 메모 ResponseDto 반환
-        return memoService.createMemo(memoRequestDto);
+    public MemoResponseDto post (@RequestBody MemoRequestDto memoRequestDto){
+        try {
+            // 작성된 메모 ResponseDto 반환
+            return memoService.createMemo(memoRequestDto);
+        }catch (NullPointerException n) {
+            return new MemoResponseDto();
+        }
     }
 
     // 게시글 전체 목록 조회 요청 및 반환

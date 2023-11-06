@@ -2,12 +2,15 @@ package com.sparta.springmemoproject.dto;
 
 import com.sparta.springmemoproject.entity.Memo;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 // 메모 응답 Dto
 // 클라이언트에게 보여줄 정보들만 담음
 @Getter
+@NoArgsConstructor
 public class MemoResponseDto{
     private String title;
     private String contents;

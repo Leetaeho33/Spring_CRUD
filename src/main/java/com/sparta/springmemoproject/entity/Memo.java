@@ -6,7 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.sql.Date;
+import java.time.LocalDateTime;
 
 // 메모 Entity
 // 메모가 가져야할 모든 정보를 가져야함
@@ -18,7 +19,7 @@ public class Memo {
     private String title;
     private String pwd;
     private String contents;
-    private Date date;
+    private java.sql.Date date;
     private long id;
     private String userName;
 
@@ -26,7 +27,7 @@ public class Memo {
         this.title = memoRequestDto.getTitle();
         this.pwd = memoRequestDto.getPwd();
         this.contents = memoRequestDto.getContents();
-        this.date = memoRequestDto.getDate();
         this.userName = memoRequestDto.getUserName();
+        this.date = new Date(System.currentTimeMillis());
     }
 }

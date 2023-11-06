@@ -4,12 +4,8 @@ import com.sparta.springmemoproject.dto.MemoRequestDto;
 import com.sparta.springmemoproject.dto.MemoResponseDto;
 import com.sparta.springmemoproject.entity.Memo;
 import com.sparta.springmemoproject.repository.MemoRepository;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +22,11 @@ public class MemoService{
     // 메모 작성 로직
     public MemoResponseDto createMemo(MemoRequestDto memoRequestDto){
         // RequestDto -> Entity
-        Memo requestMemo = new Memo(memoRequestDto);
+        Memo createMemo = new Memo(memoRequestDto);
         // DB에 저장
-        Memo responseMemo = memoRepository.saveMemo(requestMemo);
+        Memo savedMemo = memoRepository.saveMemo(createMemo);
         // Entity -> ResponsesDto
-        return new MemoResponseDto(requestMemo);
+        return new MemoResponseDto(savedMemo);
     }
 
     //메모 업데이트 로직
